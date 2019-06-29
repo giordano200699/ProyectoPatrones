@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 29-jun-2019, 2:36:21
-    Author     : Giordano
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Majestic Admin</title>
+  <title>Patrones</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="public/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="public/vendors/base/vendor.bundle.base.css">
@@ -47,7 +41,7 @@
                   <i class="mdi mdi-magnify"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
+              <input type="text" class="form-control" placeholder="Buscar" aria-label="search" aria-describedby="search">
             </div>
           </li>
         </ul>
@@ -58,7 +52,7 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Mensajes</p>
               <a class="dropdown-item">
                 <div class="item-thumbnail">
                     <img src="public/images/faces/face4.jpg" alt="image" class="profile-pic">
@@ -103,7 +97,7 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notificaciones</p>
               <a class="dropdown-item">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-success">
@@ -153,11 +147,11 @@
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="mdi mdi-settings text-primary"></i>
-                Settings
+                Configuración
               </a>
               <a class="dropdown-item">
                 <i class="mdi mdi-logout text-primary"></i>
-                Logout
+                Cerrar Sesión
               </a>
             </div>
           </li>
@@ -172,71 +166,19 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="mdi mdi-home menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="mdi mdi-circle-outline menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-              <i class="mdi mdi-view-headline menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <i class="mdi mdi-chart-pie menu-icon"></i>
-              <span class="menu-title">Charts</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Tables</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/icons/mdi.html">
-              <i class="mdi mdi-emoticon menu-icon"></i>
-              <span class="menu-title">Icons</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="mdi mdi-account menu-icon"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="documentation/documentation.html">
-              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.jsp">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="administrador/sedes/crearSede.jsp">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Sedes</span>
+                </a>
+            </li>
+          
         </ul>
       </nav>
       <!-- partial -->
