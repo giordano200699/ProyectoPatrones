@@ -173,7 +173,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="administrador/sedes/crearSede.jsp">
+                <a class="nav-link" href="SedesControlador?pagina=verSedes">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Sedes</span>
                 </a>

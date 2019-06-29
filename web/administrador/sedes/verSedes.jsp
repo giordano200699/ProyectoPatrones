@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -186,38 +187,35 @@
         <div class="content-wrapper">
           
             <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title" style="font-size: 25px;">Crear Sede</h2>
-                            <p class="card-description">
-                                Lugar que alberga cualquier actividad organizada por los Juegos Panamericanos
-                            </p>
-                            <form class="forms-sample" action="SedesControlador" method="POST">
-                                <input type="hidden" name="_method" value="POST" />
-                                <div class="form-group row">
-                                    <label for="nombreSede" class="col-sm-2 col-form-label">Nombre :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nombreSede" name="nombreSede" placeholder="Nombre">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="direccionSede" class="col-sm-2 col-form-label">Dirección :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="direccionSede" name="direccionSede" placeholder="Dirección">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="aforoSede" class="col-sm-2 col-form-label">Aforo :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="aforoSede" name="aforoSede" placeholder="Aforo">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2">Crear Sede</button>
-                                <a class="btn btn-light" href="SedesControlador?pagina=verSedes">Cancelar</a>
-                            </form>
-                        </div>
-                    </div>
+                <div class="col col-md-10">
+                    <h3>Lista de Sedes</h3>
+                </div>
+                <div class="col col-md-2">
+                    <a class="btn btn-success" href="SedesControlador?pagina=crearSede">Crear Sede</a>
+                </div>
+                <div class="col col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Aforo</th>
+                            <th scope="col">Editar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${sedes}" var="sede">
+                                <tr>
+                                  <th scope="row">${sede.sedeId}</th>
+                                  <td>${sede.nombre}</td>
+                                  <td>${sede.direccion}</td>
+                                  <td>${sede.aforo}</td>
+                                  <td><a class="btn btn-success" href="SedesControlador?pagina=editarSede&id=${sede.sedeId}">Editar</a></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -260,4 +258,3 @@
 </body>
 
 </html>
-

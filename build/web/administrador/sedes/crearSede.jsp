@@ -8,16 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Patrones</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="../../public/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../public/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="public/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="public/vendors/base/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  <link rel="stylesheet" href="../../public/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="public/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="../../public/css/style.css">
+  <link rel="stylesheet" href="public/css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../../public/images/favicon.png" />
+  <link rel="shortcut icon" href="public/images/favicon.png" />
 </head>
 <body>
   <div class="container-scroller">
@@ -25,8 +25,8 @@
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
-          <a class="navbar-brand brand-logo" href="index.html"><img src="../../public/images/logo.svg" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../public/images/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="public/images/logo.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="public/images/logo-mini.svg" alt="logo"/></a>
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-sort-variant"></span>
           </button>
@@ -55,7 +55,7 @@
               <p class="mb-0 font-weight-normal float-left dropdown-header">Mensajes</p>
               <a class="dropdown-item">
                 <div class="item-thumbnail">
-                    <img src="../../public/images/faces/face4.jpg" alt="image" class="profile-pic">
+                    <img src="public/images/faces/face4.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="item-content flex-grow">
                   <h6 class="ellipsis font-weight-normal">David Grey
@@ -67,7 +67,7 @@
               </a>
               <a class="dropdown-item">
                 <div class="item-thumbnail">
-                    <img src="../../public/images/faces/face2.jpg" alt="image" class="profile-pic">
+                    <img src="public/images/faces/face2.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="item-content flex-grow">
                   <h6 class="ellipsis font-weight-normal">Tim Cook
@@ -79,7 +79,7 @@
               </a>
               <a class="dropdown-item">
                 <div class="item-thumbnail">
-                    <img src="../../public/images/faces/face3.jpg" alt="image" class="profile-pic">
+                    <img src="public/images/faces/face3.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="item-content flex-grow">
                   <h6 class="ellipsis font-weight-normal"> Johnson
@@ -141,7 +141,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="../../public/images/faces/face5.jpg" alt="profile"/>
+              <img src="public/images/faces/face5.jpg" alt="profile"/>
               <span class="nav-profile-name">Louis Barnett</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -173,7 +173,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="administrador/sedes/crearSede.jsp">
+                <a class="nav-link" href="SedesControlador?pagina=verSedes">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Sedes</span>
                 </a>
@@ -193,7 +193,8 @@
                             <p class="card-description">
                                 Lugar que alberga cualquier actividad organizada por los Juegos Panamericanos
                             </p>
-                            <form class="forms-sample" action="../../SedesControlador" method="POST">
+                            <form class="forms-sample" action="SedesControlador" method="POST">
+                                <input type="hidden" name="_method" value="POST" />
                                 <div class="form-group row">
                                     <label for="nombreSede" class="col-sm-2 col-form-label">Nombre :</label>
                                     <div class="col-sm-10">
@@ -213,7 +214,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mr-2">Crear Sede</button>
-                                <button class="btn btn-light">Cancelar</button>
+                                <a class="btn btn-light" href="SedesControlador?pagina=verSedes">Cancelar</a>
                             </form>
                         </div>
                     </div>
@@ -238,23 +239,23 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
-  <script src="../../public/vendors/base/vendor.bundle.base.js"></script>
+  <script src="public/vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
-  <script src="../../public/vendors/chart.js/Chart.min.js"></script>
-  <script src="../../public/vendors/datatables.net/jquery.dataTables.js"></script>
-  <script src="../../public/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="public/vendors/chart.js/Chart.min.js"></script>
+  <script src="public/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="public/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="../../public/js/off-canvas.js"></script>
-  <script src="../../public/js/hoverable-collapse.js"></script>
-  <script src="../../public/js/template.js"></script>
+  <script src="public/js/off-canvas.js"></script>
+  <script src="public/js/hoverable-collapse.js"></script>
+  <script src="public/js/template.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="../../public/js/dashboard.js"></script>
-  <script src="../../public/js/data-table.js"></script>
-  <script src="../../public/js/jquery.dataTables.js"></script>
-  <script src="../../public/js/dataTables.bootstrap4.js"></script>
+  <script src="public/js/dashboard.js"></script>
+  <script src="public/js/data-table.js"></script>
+  <script src="public/js/jquery.dataTables.js"></script>
+  <script src="public/js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
 </body>
 

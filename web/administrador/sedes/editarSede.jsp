@@ -189,32 +189,44 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title" style="font-size: 25px;">Crear Sede</h2>
+                            <h2 class="card-title" style="font-size: 25px;">Editar Sede</h2>
                             <p class="card-description">
                                 Lugar que alberga cualquier actividad organizada por los Juegos Panamericanos
                             </p>
                             <form class="forms-sample" action="SedesControlador" method="POST">
-                                <input type="hidden" name="_method" value="POST" />
+                                <input type="hidden" name="_method" value="PUT" />
+                                <input type="hidden" name="sedeId" value="${sede.sedeId}" />
                                 <div class="form-group row">
                                     <label for="nombreSede" class="col-sm-2 col-form-label">Nombre :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nombreSede" name="nombreSede" placeholder="Nombre">
+                                        <input type="text" class="form-control" id="nombreSede" name="nombreSede" placeholder="Nombre" value="${sede.nombre}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="direccionSede" class="col-sm-2 col-form-label">Dirección :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="direccionSede" name="direccionSede" placeholder="Dirección">
+                                        <input type="text" class="form-control" id="direccionSede" name="direccionSede" placeholder="Dirección" value="${sede.direccion}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="aforoSede" class="col-sm-2 col-form-label">Aforo :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="aforoSede" name="aforoSede" placeholder="Aforo">
+                                        <input type="text" class="form-control" id="aforoSede" name="aforoSede" placeholder="Aforo" value="${sede.aforo}">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Crear Sede</button>
-                                <a class="btn btn-light" href="SedesControlador?pagina=verSedes">Cancelar</a>
+                                <div class="row">
+                                    <div class="col col-md-10">
+                                        <button type="submit" class="btn btn-primary mr-2">Editar Sede</button>
+                                        <a class="btn btn-light" href="SedesControlador?pagina=verSedes">Cancelar</a>
+                                    </div>
+                                    </form>
+                                    <form class="forms-sample" action="SedesControlador" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <input type="hidden" name="sedeId" value="${sede.sedeId}" />
+                                    <div class="col col-md-2">
+                                        <button type="submit" class="btn btn-danger mr-2">Eliminar</button>
+                                    </div>    
+                                </div>
                             </form>
                         </div>
                     </div>
