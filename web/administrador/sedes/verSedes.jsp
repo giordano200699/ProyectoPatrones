@@ -151,7 +151,7 @@
                 Configuración
               </a>
               <a class="dropdown-item">
-                <i class="mdi mdi-logout text-primary"></i>
+                <i class="mdi mdi-logout text-primary" href="index.jsp"></i>
                 Cerrar Sesión
               </a>
             </div>
@@ -168,7 +168,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.jsp">
+                <a class="nav-link" href="administrador.jsp">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Inicio</span>
                 </a>
