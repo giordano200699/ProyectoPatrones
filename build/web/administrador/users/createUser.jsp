@@ -195,32 +195,60 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title" style="font-size: 25px;">Crear Sede</h2>
+                            <h2 class="card-title" style="font-size: 25px;">Crear Usuario</h2>
                             <p class="card-description">
-                                Lugar que alberga cualquier actividad organizada por los Juegos Panamericanos
+                                Individuo capaz de interactuar con el sistema, puede ser usuario normal o Administrador.
                             </p>
-                            <form class="forms-sample" action="SedesControlador" method="POST">
+                            <form class="forms-sample" action="UsersController" method="POST">
                                 <input type="hidden" name="_method" value="POST" />
                                 <div class="form-group row">
-                                    <label for="nombreSede" class="col-sm-2 col-form-label">Nombre :</label>
+                                    <label for="nombreUser" class="col-sm-2 col-form-label">Nombre :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nombreSede" name="nombreSede" placeholder="Nombre">
+                                        <input type="text" class="form-control" id="nombreUser" name="nombreUser" placeholder="Nombre">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="direccionSede" class="col-sm-2 col-form-label">Dirección :</label>
+                                    <label for="apellidosUser" class="col-sm-2 col-form-label">Apellidos :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="direccionSede" name="direccionSede" placeholder="Dirección">
+                                        <input type="text" class="form-control" id="apellidosUser" name="apellidosUser" placeholder="Apellidos">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="aforoSede" class="col-sm-2 col-form-label">Aforo :</label>
+                                    <label for="edadUser" class="col-sm-2 col-form-label">Edad :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="aforoSede" name="aforoSede" placeholder="Aforo">
+                                        <input type="text" class="form-control" id="edadUser" name="edadUser" placeholder="Edad">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Crear Sede</button>
-                                <a class="btn btn-light" href="SedesControlador?pagina=verSedes">Cancelar</a>
+                                <div class="form-group row">
+                                    <label for="direccionUser" class="col-sm-2 col-form-label">Dirección :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="direccionUser" name="direccionUser" placeholder="Dirección">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tipoUser" class="col-sm-2 col-form-label">Tipo de Usuario :</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="tipoUser" name="tipoUser">
+                                            <option value="normal" selected>Normal</option>
+                                            <option value="administrador">Administrador</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="correoUser" class="col-sm-2 col-form-label">Correo :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="correoUser" name="correoUser" placeholder="Correo">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="contraseniaUser" class="col-sm-2 col-form-label">Contraseña :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="contraseniaUser" name="contraseniaUser" placeholder="Contraseña">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-2">Crear Usuario</button>
+                                <a class="btn btn-light" href="UsersController?page=showUsers">Cancelar</a>
                             </form>
                         </div>
                     </div>

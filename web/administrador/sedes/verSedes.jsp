@@ -179,6 +179,12 @@
                     <span class="menu-title">Sedes</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="UsersController?page=showUsers">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Usuarios</span>
+                </a>
+            </li>
           
         </ul>
       </nav>

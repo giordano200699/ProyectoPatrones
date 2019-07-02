@@ -14,6 +14,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import java.util.ArrayList;
 import clases.Sede;
+import clases.Person;
 
 /**
  *
@@ -70,5 +71,75 @@ public class ConexionMongo {
     public void eliminarSede(int sedeId){
         DBCollection sedesC = this.bd.getCollection("sedes");
         sedesC.remove(new BasicDBObject().append("sedeId", sedeId));
+    }
+    
+    public void createUser(String nombre, String apellidos, int edad,String direccion, String tipo, String correo, String contrasenia){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCollection usersC = this.bd.getCollection("usuarios");
+        DBCursor personCU = personsC.find().sort(new BasicDBObject("personaId",-1)).limit(1);
+        //BasicDBObject personU = (BasicDBObject) personsC.find().sort(new BasicDBObject("personaId",-1)).limit(1);
+        int idU = 1;
+        if(personCU.hasNext()){
+            BasicDBObject personU = (BasicDBObject) personCU.next();
+            if(personU.get("personaId")!=null){
+                System.out.println(personU.get("personaId"));
+                idU = (int)personU.get("personaId") +1;
+            }
+            
+        }
+        BasicDBObject documento = new BasicDBObject("nombre",nombre).append("personaId",idU).append("apellidos",apellidos).append("edad",edad).append("direccion",direccion).append("tipoUsuario",tipo);
+        personsC.insert(documento); 
+        
+        BasicDBObject documento2 = new BasicDBObject("correo",correo).append("contrasenia",contrasenia).append("personaId",idU);
+        usersC.insert(documento2); 
+        
+    }
+    
+    public ArrayList<Person> getPersons(){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCursor persons = personsC.find();
+        ArrayList<Person> personsA = new ArrayList<>();
+        persons.forEach((person)->{
+            personsA.add(new Person((int)person.get("personaId"),(String)person.get("nombre"),(String)person.get("apellidos"),(int)person.get("edad"),(String)person.get("direccion"),(String)person.get("tipoUsuario")));
+        });
+        return personsA;
+    }
+    
+    public Person getPerson(int personId){
+        DBCollection personsC = this.bd.getCollection("personas");
+        BasicDBObject person = (BasicDBObject) personsC.findOne(new BasicDBObject("personaId",personId));
+        int idU = 1;
+        if(person!=null){
+            return new Person((int)person.get("personaId"),(String)person.get("nombre"),(String)person.get("apellidos"),(int)person.get("edad"),(String)person.get("direccion"),(String)person.get("tipoUsuario"));
+        }
+        return null;
+    }
+    
+    public void editPerson(String nombre, String apellidos, int edad,String direccion, String tipo, int personId){
+        DBCollection personsC = this.bd.getCollection("personas");
+        personsC.update(new BasicDBObject().append("personaId", personId),
+                new BasicDBObject("$set",new BasicDBObject("nombre",nombre).append("apellidos",apellidos).append("edad",edad).append("direccion",direccion).append("tipoUsuario",tipo)));
+    }
+    
+    public void deletePerson(int personId){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCollection usersC = this.bd.getCollection("usuarios");
+        personsC.remove(new BasicDBObject().append("personaId", personId));
+        usersC.remove(new BasicDBObject().append("personaId", personId));
+    }
+    
+    public Person findForUser(String correo, String contrasenia){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCollection usersC = this.bd.getCollection("usuarios");
+        
+        BasicDBObject user = (BasicDBObject) usersC.findOne(new BasicDBObject("correo",correo).append("contrasenia", contrasenia));
+        if(user!=null){
+            BasicDBObject person = (BasicDBObject) personsC.findOne(new BasicDBObject("personaId",(int)user.get("personaId")));
+            if(person!=null){
+                return new Person((int)person.get("personaId"),(String)person.get("nombre"),(String)person.get("apellidos"),(int)person.get("edad"),(String)person.get("direccion"),(String)person.get("tipoUsuario"));
+            }
+        }
+        
+        return null;
     }
 }
