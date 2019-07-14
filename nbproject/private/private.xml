@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/administrador.jsp</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/administrador/sedes/crearSede.jsp</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/src/java/controladores/SedesControlador.java</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/administrador/sedes/verSedes.jsp</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/login.jsp</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/src/java/BD/ConexionMongo.java</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/index.jsp</file>
-            <file>file:/E:/Archivos/Universidad/Ciclo7/PatronesDeDiseno/ProyectoPatrones/web/administrador/sedes/editarSede.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

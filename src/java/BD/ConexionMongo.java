@@ -5,6 +5,7 @@
  */
 package BD;
 
+import clases.Competition;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -15,6 +16,7 @@ import com.mongodb.MongoClientURI;
 import java.util.ArrayList;
 import clases.Sede;
 import clases.Person;
+import java.util.Hashtable;
 
 /**
  *
@@ -141,5 +143,62 @@ public class ConexionMongo {
         }
         
         return null;
+    }
+    
+    public void createCompetition(String title, String category, int headquarterId){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        
+        DBCursor competitionCU = competitionsC.find().sort(new BasicDBObject("competenciaId",-1)).limit(1);
+        int idU = 1;
+        if(competitionCU.hasNext()){
+            BasicDBObject competitionU = (BasicDBObject) competitionCU.next();
+            if(competitionU.get("competenciaId")!=null){
+                idU = (int)competitionU.get("competenciaId") +1;
+            }
+        }
+        
+        BasicDBObject documento = new BasicDBObject("competenciaId",idU).append("titulo",title).append("categoria",category).append("sedeId",headquarterId);
+        competitionsC.insert(documento); 
+    }
+    
+    public ArrayList<Competition> getCompetitions(){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        DBCursor competitions = competitionsC.find();
+        ArrayList<Competition> competitionsA = new ArrayList<>();
+        competitions.forEach((competition)->{
+            competitionsA.add(new Competition((int)competition.get("competenciaId"),(String)competition.get("titulo"),(String)competition.get("categoria"),(int)competition.get("sedeId")));
+        });
+        return competitionsA;
+    }
+    
+    public Hashtable<Integer, String> getHeadquartersDiccionary(){
+        DBCollection headquartersC = this.bd.getCollection("sedes");
+        DBCursor headquarters = headquartersC.find();
+        Hashtable<Integer, String> headquartersH = new Hashtable<Integer, String>();
+        headquarters.forEach((headquarter)->{
+            headquartersH.put((int)headquarter.get("sedeId"), (String)headquarter.get("nombre"));
+        });
+        return headquartersH;
+    }
+    
+    public Competition getCompetition(int competitionId){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        BasicDBObject competition = (BasicDBObject) competitionsC.findOne(new BasicDBObject("competenciaId",competitionId));
+        int idU = 1;
+        if(competition!=null){
+            return new Competition((int)competition.get("competenciaId"),(String)competition.get("titulo"),(String)competition.get("categoria"),(int)competition.get("sedeId"));
+        }
+        return null;
+    }
+    
+    public void editCompetition(String title, String category, int headquarterId, int competitionId){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        competitionsC.update(new BasicDBObject().append("competenciaId", competitionId),
+                new BasicDBObject("$set",new BasicDBObject("titulo",title).append("categoria",category).append("sedeId",headquarterId)));
+    }
+    
+    public void deleteCompetition(int competitionId){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        competitionsC.remove(new BasicDBObject().append("competenciaId", competitionId));
     }
 }

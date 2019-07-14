@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -198,66 +199,35 @@
         <div class="content-wrapper">
           
             <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title" style="font-size: 25px;">Crear Usuario</h2>
-                            <p class="card-description">
-                                Individuo capaz de interactuar con el sistema, puede ser usuario normal o Administrador.
-                            </p>
-                            <form class="forms-sample" action="UsersController" method="POST">
-                                <input type="hidden" name="_method" value="POST" />
-                                <div class="form-group row">
-                                    <label for="nombreUser" class="col-sm-2 col-form-label">Nombre :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nombreUser" name="nombreUser" placeholder="Nombre">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="apellidosUser" class="col-sm-2 col-form-label">Apellidos :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="apellidosUser" name="apellidosUser" placeholder="Apellidos">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="edadUser" class="col-sm-2 col-form-label">Edad :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="edadUser" name="edadUser" placeholder="Edad">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="direccionUser" class="col-sm-2 col-form-label">Dirección :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="direccionUser" name="direccionUser" placeholder="Dirección">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="tipoUser" class="col-sm-2 col-form-label">Tipo de Usuario :</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="tipoUser" name="tipoUser">
-                                            <option value="normal" selected>Normal</option>
-                                            <option value="administrador">Administrador</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="correoUser" class="col-sm-2 col-form-label">Correo :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="correoUser" name="correoUser" placeholder="Correo">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="contraseniaUser" class="col-sm-2 col-form-label">Contraseña :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="contraseniaUser" name="contraseniaUser" placeholder="Contraseña">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2">Crear Usuario</button>
-                                <a class="btn btn-light" href="UsersController?page=showUsers">Cancelar</a>
-                            </form>
-                        </div>
-                    </div>
+                <div class="col col-md-10">
+                    <h3>Lista de Competencias</h3>
+                </div>
+                <div class="col col-md-2">
+                    <a class="btn btn-success" href="CompetitionsController?page=createCompetition">Crear Competencia</a>
+                </div>
+                <div class="col col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Sede</th>
+                            <th scope="col">Editar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${competitions}" var="competition">
+                                <tr>
+                                  <th scope="row">${competition.competitionId}</th>
+                                  <td>${competition.title}</td>
+                                  <td>${competition.category}</td>
+                                  <td>${headquartersH.get(competition.headquarterId)}</td>
+                                  <td><a class="btn btn-success" href="CompetitionsController?page=editCompetition&id=${competition.competitionId}">Editar</a></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -300,4 +270,3 @@
 </body>
 
 </html>
-

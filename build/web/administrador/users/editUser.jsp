@@ -184,6 +184,12 @@
                     <span class="menu-title">Usuarios</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="CompetitionsController?page=showCompetitions">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Competencias</span>
+                </a>
+            </li>
           
         </ul>
       </nav>

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -201,60 +202,37 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title" style="font-size: 25px;">Crear Usuario</h2>
+                            <h2 class="card-title" style="font-size: 25px;">Crear Competencia</h2>
                             <p class="card-description">
-                                Individuo capaz de interactuar con el sistema, puede ser usuario normal o Administrador.
+                                Tipo de competencia ejercido en los juegos Panamericanos.
                             </p>
-                            <form class="forms-sample" action="UsersController" method="POST">
+                            <form class="forms-sample" action="CompetitionsController" method="POST">
                                 <input type="hidden" name="_method" value="POST" />
                                 <div class="form-group row">
-                                    <label for="nombreUser" class="col-sm-2 col-form-label">Nombre :</label>
+                                    <label for="titleCompetition" class="col-sm-2 col-form-label">Título :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nombreUser" name="nombreUser" placeholder="Nombre">
+                                        <input type="text" class="form-control" id="titleCompetition" name="titleCompetition" placeholder="Título">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="apellidosUser" class="col-sm-2 col-form-label">Apellidos :</label>
+                                    <label for="categoryCompetition" class="col-sm-2 col-form-label">Categoría :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="apellidosUser" name="apellidosUser" placeholder="Apellidos">
+                                        <input type="text" class="form-control" id="categoryCompetition" name="categoryCompetition" placeholder="Categoría">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="edadUser" class="col-sm-2 col-form-label">Edad :</label>
+                                    <label for="headquarterCompetition" class="col-sm-2 col-form-label">Sede :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="edadUser" name="edadUser" placeholder="Edad">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="direccionUser" class="col-sm-2 col-form-label">Dirección :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="direccionUser" name="direccionUser" placeholder="Dirección">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="tipoUser" class="col-sm-2 col-form-label">Tipo de Usuario :</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="tipoUser" name="tipoUser">
-                                            <option value="normal" selected>Normal</option>
-                                            <option value="administrador">Administrador</option>
+                                        <select class="form-control" id="headquarterCompetition" name="headquarterCompetition">
+                                            <c:forEach items="${sedes}" var="sede">
+                                                <option value="${sede.sedeId}">${sede.nombre}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <div class="form-group row">
-                                    <label for="correoUser" class="col-sm-2 col-form-label">Correo :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="correoUser" name="correoUser" placeholder="Correo">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="contraseniaUser" class="col-sm-2 col-form-label">Contraseña :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="contraseniaUser" name="contraseniaUser" placeholder="Contraseña">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2">Crear Usuario</button>
-                                <a class="btn btn-light" href="UsersController?page=showUsers">Cancelar</a>
+                                <button type="submit" class="btn btn-primary mr-2">Crear Competencia</button>
+                                <a class="btn btn-light" href="CompetitionsController?page=showCompetitions">Cancelar</a>
                             </form>
                         </div>
                     </div>
