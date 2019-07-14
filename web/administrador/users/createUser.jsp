@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -235,8 +236,20 @@
                                     <label for="tipoUser" class="col-sm-2 col-form-label">Tipo de Usuario :</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="tipoUser" name="tipoUser">
-                                            <option value="normal" selected>Normal</option>
+                                            <option value="espectador" selected>Espectador</option>
                                             <option value="administrador">Administrador</option>
+                                            <option value="participante">Participante</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row" id="divCompetitionUser">
+                                    <label for="competitionUser" class="col-sm-2 col-form-label">Competencia :</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="competitionUser" name="competitionUser">
+                                            <c:forEach items="${competitions}" var="competition">
+                                                <option value="${competition.competitionId}">${competition.title}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -297,6 +310,21 @@
   <script src="public/js/jquery.dataTables.js"></script>
   <script src="public/js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
+ 
+    
+<script>
+      $(function () {
+        $("#divCompetitionUser").hide();
+        $("#tipoUser").on("change", function () {
+            if($("#tipoUser").val()=="participante"){
+                $("#divCompetitionUser").show();
+            }else{
+                $("#divCompetitionUser").hide();
+            }
+        });
+    });
+</script>
+ 
 </body>
 
 </html>

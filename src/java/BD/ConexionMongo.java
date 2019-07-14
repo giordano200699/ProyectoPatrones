@@ -6,6 +6,7 @@
 package BD;
 
 import clases.Competition;
+import clases.Competitor;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -126,8 +127,10 @@ public class ConexionMongo {
     public void deletePerson(int personId){
         DBCollection personsC = this.bd.getCollection("personas");
         DBCollection usersC = this.bd.getCollection("usuarios");
+        DBCollection competitorsC = this.bd.getCollection("participantes");
         personsC.remove(new BasicDBObject().append("personaId", personId));
         usersC.remove(new BasicDBObject().append("personaId", personId));
+        competitorsC.remove(new BasicDBObject().append("personaId", personId));
     }
     
     public Person findForUser(String correo, String contrasenia){
@@ -200,5 +203,82 @@ public class ConexionMongo {
     public void deleteCompetition(int competitionId){
         DBCollection competitionsC = this.bd.getCollection("competencias");
         competitionsC.remove(new BasicDBObject().append("competenciaId", competitionId));
+    }
+    
+    public void createCompetitor(String nombre, String apellidos, int edad,String direccion, String tipo, String correo, String contrasenia, int competitionId){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCollection usersC = this.bd.getCollection("usuarios");
+        DBCollection competitorsC = this.bd.getCollection("participantes");
+        DBCursor personCU = personsC.find().sort(new BasicDBObject("personaId",-1)).limit(1);
+        //BasicDBObject personU = (BasicDBObject) personsC.find().sort(new BasicDBObject("personaId",-1)).limit(1);
+        int idU = 1;
+        if(personCU.hasNext()){
+            BasicDBObject personU = (BasicDBObject) personCU.next();
+            if(personU.get("personaId")!=null){
+                System.out.println(personU.get("personaId"));
+                idU = (int)personU.get("personaId") +1;
+            }
+            
+        }
+        DBCursor competitorsCU = competitorsC.find().sort(new BasicDBObject("participanteId",-1)).limit(1);
+        int idCompetitorU = 1;
+        if(competitorsCU.hasNext()){
+            BasicDBObject competitorU = (BasicDBObject) competitorsCU.next();
+            if(competitorU.get("participanteId")!=null){
+                idCompetitorU = (int)competitorU.get("participanteId") +1;
+            }
+            
+        }
+        
+        
+        BasicDBObject documento = new BasicDBObject("nombre",nombre).append("personaId",idU).append("apellidos",apellidos).append("edad",edad).append("direccion",direccion).append("tipoUsuario",tipo);
+        personsC.insert(documento); 
+        
+        BasicDBObject documento2 = new BasicDBObject("correo",correo).append("contrasenia",contrasenia).append("personaId",idU);
+        usersC.insert(documento2);
+        
+        BasicDBObject documento3 = new BasicDBObject("participanteId",idCompetitorU).append("competenciaId",competitionId).append("personaId",idU);
+        competitorsC.insert(documento3);
+        
+    }
+    public Competitor getCompetitor(int personId){
+        DBCollection competitorsC = this.bd.getCollection("participantes");
+        BasicDBObject competitor = (BasicDBObject) competitorsC.findOne(new BasicDBObject("personaId",personId));
+        if(competitor!=null){
+            return new Competitor((int)competitor.get("participanteId"),personId,(int)competitor.get("competenciaId"));
+        }
+        return null;
+    }
+    
+    public void editCompetitor(String nombre, String apellidos, int edad,String direccion, String tipo, int personId, int competitionId, String typeStart){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCollection competitorsC = this.bd.getCollection("participantes");
+        personsC.update(new BasicDBObject().append("personaId", personId),
+                new BasicDBObject("$set",new BasicDBObject("nombre",nombre).append("apellidos",apellidos).append("edad",edad).append("direccion",direccion).append("tipoUsuario",tipo)));
+        if(typeStart.equals("participante")){
+            if(tipo.equals("participante")){
+                //Participante a participante
+                competitorsC.update(new BasicDBObject().append("personaId", personId),
+                    new BasicDBObject("$set",new BasicDBObject("competenciaId",competitionId)));
+            }else{
+                //Participante a no participante
+                competitorsC.remove(new BasicDBObject().append("personaId", personId));
+            }
+        }else{
+            //No participante a participante
+            DBCursor competitorsCU = competitorsC.find().sort(new BasicDBObject("participanteId",-1)).limit(1);
+            int idCompetitorU = 1;
+            if(competitorsCU.hasNext()){
+                BasicDBObject competitorU = (BasicDBObject) competitorsCU.next();
+                if(competitorU.get("participanteId")!=null){
+                    idCompetitorU = (int)competitorU.get("participanteId") +1;
+                }
+
+            }
+            BasicDBObject documento3 = new BasicDBObject("participanteId",idCompetitorU).append("competenciaId",competitionId).append("personaId",personId);
+            competitorsC.insert(documento3);
+
+        }
+        
     }
 }

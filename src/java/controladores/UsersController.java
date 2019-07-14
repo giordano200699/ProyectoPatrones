@@ -6,6 +6,8 @@
 package controladores;
 
 import BD.ConexionMongo;
+import clases.Competition;
+import clases.Competitor;
 import clases.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -69,12 +71,20 @@ public class UsersController extends HttpServlet {
             request.setAttribute("usuarios",users);
             request.getRequestDispatcher("administrador/users/showUsers.jsp").forward(request, response);
         }else if(request.getParameter("page").equals("createUser")){
+            ConexionMongo conexion = new ConexionMongo();
+            ArrayList<Competition> competitions =conexion.getCompetitions();
+            conexion.cerrarConexion();
+            request.setAttribute("competitions",competitions);
             request.getRequestDispatcher("administrador/users/createUser.jsp").forward(request, response);
         }else if(request.getParameter("page").equals("editUser")){
             ConexionMongo conexion = new ConexionMongo();
             Person person =conexion.getPerson(Integer.parseInt(request.getParameter("id")));
+            ArrayList<Competition> competitions =conexion.getCompetitions();
+            Competitor competitor = conexion.getCompetitor(person.getPersonId());
             conexion.cerrarConexion();
             request.setAttribute("persona",person);
+            request.setAttribute("competitions",competitions);
+            request.setAttribute("competitor",competitor);
             request.getRequestDispatcher("administrador/users/editUser.jsp").forward(request, response);
         }
     }
@@ -104,9 +114,16 @@ public class UsersController extends HttpServlet {
             String tipo = request.getParameter("tipoUser");
             String correo = request.getParameter("correoUser");
             String contrasenia = request.getParameter("contraseniaUser");
+            
             ConexionMongo conexion = new ConexionMongo();
             //conexion.crearSede(nombre,direccion,aforo);
-            conexion.createUser(nombre, apellidos, edad, direccion, tipo, correo, contrasenia);
+            if(tipo.equals("participante")){
+                int competitionId = Integer.parseInt(request.getParameter("competitionUser"));
+                conexion.createCompetitor(nombre, apellidos, edad, direccion, tipo, correo, contrasenia, competitionId);
+            }else{
+                conexion.createUser(nombre, apellidos, edad, direccion, tipo, correo, contrasenia);
+            }
+            
             ArrayList<Person> users =conexion.getPersons();
             conexion.cerrarConexion();
             request.setAttribute("usuarios",users);
@@ -124,9 +141,14 @@ public class UsersController extends HttpServlet {
             String direccion = request.getParameter("direccionUser");
             String tipo = request.getParameter("tipoUser");
             int personId = Integer.parseInt(request.getParameter("personId"));
-
+            String typeStart = request.getParameter("_typeStart");
             ConexionMongo conexion = new ConexionMongo();
-            conexion.editPerson(nombre, apellidos, edad, direccion, tipo, personId);
+            if(tipo.equals("participante")|| typeStart.equals("participante")){
+                int competitionId = Integer.parseInt(request.getParameter("competitionUser"));
+                conexion.editCompetitor(nombre, apellidos, edad, direccion, tipo, personId,competitionId,typeStart);
+            }else{
+                conexion.editPerson(nombre, apellidos, edad, direccion, tipo, personId);
+            }
             ArrayList<Person> users =conexion.getPersons();
             conexion.cerrarConexion();
             request.setAttribute("usuarios",users);

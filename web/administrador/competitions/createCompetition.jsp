@@ -274,6 +274,7 @@
   <script src="public/js/data-table.js"></script>
   <script src="public/js/jquery.dataTables.js"></script>
   <script src="public/js/dataTables.bootstrap4.js"></script>
+
   <!-- End custom js for this page-->
 </body>
 

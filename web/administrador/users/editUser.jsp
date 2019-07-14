@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -207,6 +208,7 @@
                             </p>
                             <form class="forms-sample" action="UsersController" method="POST">
                                 <input type="hidden" name="_method" value="PUT" />
+                                <input type="hidden" name="_typeStart" value="${persona.type}" />
                                 <input type="hidden" name="personId" value="${persona.personId}" />
                                 <div class="form-group row">
                                     <label for="nombreUser" class="col-sm-2 col-form-label">Nombre :</label>
@@ -236,8 +238,20 @@
                                     <label for="tipoUser" class="col-sm-2 col-form-label">Tipo de Usuario :</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="tipoUser" name="tipoUser">
-                                            <option value="normal" ${persona.type.equals("normal")?"selected":null} >Normal</option>
+                                            <option value="espectador" ${persona.type.equals("espectador")?"selected":null} >Espectador</option>
                                             <option value="administrador" ${persona.type.equals("administrador")?"selected":null} >Administrador</option>
+                                            <option value="participante" ${persona.type.equals("participante")?"selected":null} >Participante</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                        
+                                <div class="form-group row" id="divCompetitionUser">
+                                    <label for="competitionUser" class="col-sm-2 col-form-label">Competencia :</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="competitionUser" name="competitionUser">
+                                            <c:forEach items="${competitions}" var="competition">
+                                                <option value="${competition.competitionId}" ${competitor.getCompetitionId()==competition.competitionId?"selected":null}>${competition.title}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -297,6 +311,21 @@
   <script src="public/js/jquery.dataTables.js"></script>
   <script src="public/js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
+  
+  <script>
+      $(function () {
+        if("participante"!="${persona.type}"){
+            $("#divCompetitionUser").hide();
+        }
+        $("#tipoUser").on("change", function () {
+            if($("#tipoUser").val()=="participante"){
+                $("#divCompetitionUser").show();
+            }else{
+                $("#divCompetitionUser").hide();
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
