@@ -5,7 +5,6 @@
  */
 package controladores;
 
-import BD.ConexionMongo;
 import clases.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Giordano
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "UserProfileController", urlPatterns = {"/UserProfileController"})
+public class UserProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet UserProfile</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,9 +60,12 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        if(request.getParameter("parametro").equals("logout")){
-            request.getSession().invalidate();
-            response.sendRedirect("index.jsp");
+        if(request.getParameter("parametro").equals("index")){
+            request.getRequestDispatcher("user/user.jsp").forward(request, response);
+        }else if(request.getParameter("parametro").equals("userProfile")){
+            Person person = (Person) request.getSession().getAttribute("person");
+            request.setAttribute("person",person);
+            request.getRequestDispatcher("user/profile/userProfile.jsp").forward(request, response);
         }
     }
 
@@ -78,24 +80,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String correo = request.getParameter("correoUser");
-        String contrasenia = request.getParameter("contraseniaUser");
-        ConexionMongo conexion = new ConexionMongo();
-        Person person = conexion.findForUser(correo, contrasenia);
-        conexion.cerrarConexion();
-        if(person!=null){
-            request.getSession().setAttribute("person", person);
-            if(person.getType().equals("administrador")){
-                request.getRequestDispatcher("administrador.jsp").forward(request, response);
-            }else{
-                request.getRequestDispatcher("user/user.jsp").forward(request, response);
-            }
-            
-        }else{
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        
+        processRequest(request, response);
     }
 
     /**

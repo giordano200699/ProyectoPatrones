@@ -142,14 +142,14 @@
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="public/images/faces/face5.jpg" alt="profile"/>
-              <span class="nav-profile-name">Louis Barnett</span>
+              <span class="nav-profile-name">${person.name}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="mdi mdi-settings text-primary"></i>
                 Configuración
               </a>
-              <a class="dropdown-item" href="index.jsp">
+              <a class="dropdown-item" href="LoginController?parametro=logout">
                 <i class="mdi mdi-logout text-primary"></i>
                 Cerrar Sesión
               </a>
@@ -202,7 +202,7 @@
               <div class="d-flex justify-content-between flex-wrap">
                 <div class="d-flex align-items-end flex-wrap">
                   <div class="mr-md-3 mr-xl-5">
-                    <h2>Welcome back,</h2>
+                    <h2>Bienvenido Administrador</h2>
                     <p class="mb-md-0">Your analytics dashboard template.</p>
                   </div>
                   <div class="d-flex">

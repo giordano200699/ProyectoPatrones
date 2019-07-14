@@ -167,27 +167,16 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="administrador.jsp">
+                <a class="nav-link" href="UserProfileController?parametro=index">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Inicio</span>
                 </a>
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link" href="SedesControlador?pagina=verSedes">
+                <a class="nav-link" href="UserProfileController?parametro=userProfile">
                     <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Sedes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="UsersController?page=showUsers">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Usuarios</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="CompetitionsController?page=showCompetitions">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Competencias</span>
+                    <span class="menu-title">Mi Perfil</span>
                 </a>
             </li>
           
@@ -195,54 +184,65 @@
       </nav>
       <!-- partial -->
       <div class="main-panel">
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="padding-top: 12px;">
           
           <div class="row">
-            <div class="col-md-12 grid-margin">
-              <div class="d-flex justify-content-between flex-wrap">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-between flex-wrap" >
                 <div class="d-flex align-items-end flex-wrap">
                   <div class="mr-md-3 mr-xl-5">
-                    <h2>Bienvenido Administrador</h2>
-                    <p class="mb-md-0">Your analytics dashboard template.</p>
-                  </div>
-                  <div class="d-flex">
-                    <i class="mdi mdi-home text-muted hover-cursor"></i>
-                    <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Dashboard&nbsp;/&nbsp;</p>
-                    <p class="text-primary mb-0 hover-cursor">Analytics</p>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-end flex-wrap">
-                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
-                    <i class="mdi mdi-download text-muted"></i>
-                  </button>
-                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
-                    <i class="mdi mdi-clock-outline text-muted"></i>
-                  </button>
-                  <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
-                    <i class="mdi mdi-plus text-muted"></i>
-                  </button>
-                  <button class="btn btn-primary mt-2 mt-xl-0">Generate report</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row" id="proBanner">
-            <div class="col-md-12 grid-margin">
-              <div class="card bg-gradient-primary border-0">
-                <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap">
-                  <p class="mb-0 text-white font-weight-medium">Like what you see? Checkout our premium version for more.</p>
-                  <div class="d-flex">
-                    <a href="https://github.com/Urbanui/MajesticAdmin-Free-Bootstrap-Admin-Template" target="_blank" class="btn btn-outline-light mr-2">Download free version</a>
-                    <a href="http://www.urbanui.com/majestic-admin-pro/template/" target="_blank" class="btn btn-outline-light mr-2 bg-gradient-danger border-0">Upgrade to Pro</a>
-                    <button id="bannerClose" class="btn border-0 p-0">
-                      <i class="mdi mdi-close text-white"></i>
-                    </button>
+                    <h2 style="padding-bottom: 0px; margin:0px;">Mi Perfil</h2>
                   </div>
                 </div>
               </div>
+                <hr>
             </div>
           </div>
           <div class="row">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-12"style="background-color:#2A4A92; text-align: center; margin-bottom: 25px;">
+                        <span style="color:white; font-size: 37px;">${person.name}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Apellidos :</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p>${person.lastName}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Nombre :</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p>${person.name}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Edad :</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p>${person.age} años</p>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Dirección :</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p>${person.address}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Tipo de usuario :</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p>${person.type}</p>
+                    </div>
+                </div>
+                
+            </div> 
+            <div class="col-md-5 grid-margin stretch-card">
+              <div class="card">
+                  <img src="public/img/milco.png" class="rounded" alt="Juegos panamericanos">
+              </div>
+            </div>        
+            
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body dashboard-tabs p-0">

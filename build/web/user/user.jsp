@@ -167,27 +167,16 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="administrador.jsp">
+                <a class="nav-link" href="user/user.jsp">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Inicio</span>
                 </a>
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link" href="SedesControlador?pagina=verSedes">
+                <a class="nav-link" href="UserProfileController?parametro=userProfile">
                     <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Sedes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="UsersController?page=showUsers">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Usuarios</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="CompetitionsController?page=showCompetitions">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Competencias</span>
+                    <span class="menu-title">Mi Perfil</span>
                 </a>
             </li>
           
@@ -202,7 +191,7 @@
               <div class="d-flex justify-content-between flex-wrap">
                 <div class="d-flex align-items-end flex-wrap">
                   <div class="mr-md-3 mr-xl-5">
-                    <h2>Bienvenido Administrador</h2>
+                    <h2>Bienvenido Usuario</h2>
                     <p class="mb-md-0">Your analytics dashboard template.</p>
                   </div>
                   <div class="d-flex">
