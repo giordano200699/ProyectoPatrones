@@ -17,6 +17,8 @@ import com.mongodb.MongoClientURI;
 import java.util.ArrayList;
 import clases.Sede;
 import clases.Person;
+import clases.Publication;
+import java.util.Date;
 import java.util.Hashtable;
 
 /**
@@ -280,5 +282,61 @@ public class ConexionMongo {
 
         }
         
+    }
+    
+    public void createPublication(String txtPublication, int personId, int competitionId, int parentId){
+        DBCollection publicationsC = this.bd.getCollection("publicaciones");
+        
+        DBCursor publicationCU = publicationsC.find().sort(new BasicDBObject("publicacionId",-1)).limit(1);
+        int idU = 1;
+        if(publicationCU.hasNext()){
+            BasicDBObject publicationU = (BasicDBObject) publicationCU.next();
+            if(publicationU.get("publicacionId")!=null){
+                idU = (int)publicationU.get("publicacionId") +1;
+            }
+        }
+        
+        BasicDBObject documento = new BasicDBObject("publicacionId",idU).append("contenido",txtPublication).append("fecha",new Date()).append("personaId",personId).append("competenciaId",competitionId).append("padreId",parentId);
+        publicationsC.insert(documento); 
+    }
+    
+    public ArrayList<Publication> getPublications(int competitionId){
+        DBCollection publicationsC = this.bd.getCollection("publicaciones");
+        DBCursor publications = publicationsC.find(new BasicDBObject("competenciaId",competitionId).append("padreId",0));
+        ArrayList<Publication> publicationsA = new ArrayList<>();
+        publications.forEach((publication)->{
+            publicationsA.add(new Publication((int)publication.get("publicacionId"),(String)publication.get("contenido"),(int)publication.get("personaId"),(int)publication.get("competenciaId"),(int)publication.get("padreId")));
+        });
+        return publicationsA;
+    }
+    
+    public Hashtable<Integer, String> getPersonsDiccionary(){
+        DBCollection personsC = this.bd.getCollection("personas");
+        DBCursor persons = personsC.find();
+        Hashtable<Integer, String> personsH = new Hashtable<Integer, String>();
+        persons.forEach((person)->{
+            personsH.put((int)person.get("personaId"), (String)person.get("apellidos")+", "+(String)person.get("nombre"));
+        });
+        return personsH;
+    }
+    
+    public ArrayList<Publication> getPublicationsChildren(int competitionId){
+        DBCollection publicationsC = this.bd.getCollection("publicaciones");
+        DBCursor publications = publicationsC.find(new BasicDBObject("padreId",competitionId));
+        ArrayList<Publication> publicationsA = new ArrayList<>();
+        publications.forEach((publication)->{
+            publicationsA.add(new Publication((int)publication.get("publicacionId"),(String)publication.get("contenido"),(int)publication.get("personaId"),(int)publication.get("competenciaId"),(int)publication.get("padreId")));
+        });
+        return publicationsA;
+    }
+    public ArrayList<Competitor> getCompetitorsForCompetition(int competitionId){
+        DBCollection competitorsC = this.bd.getCollection("participantes");
+                
+        DBCursor competitors = competitorsC.find(new BasicDBObject("competenciaId",competitionId));
+        ArrayList<Competitor> competitorsA = new ArrayList<>();
+        competitors.forEach((competitor)->{
+            competitorsA.add(new Competitor((int)competitor.get("participanteId"),(int)competitor.get("personaId"),(int)competitor.get("competenciaId")));
+        });
+        return competitorsA;
     }
 }

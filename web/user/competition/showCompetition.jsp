@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -198,7 +199,7 @@
               <div class="d-flex justify-content-between flex-wrap" >
                 <div class="d-flex align-items-end flex-wrap">
                   <div class="mr-md-3 mr-xl-5">
-                    <h2 style="padding-bottom: 0px; margin:0px;">Mi Perfil</h2>
+                    <h2 style="padding-bottom: 0px; margin:0px;">Publicaciones de ${competition.title}</h2>
                   </div>
                 </div>
               </div>
@@ -206,49 +207,38 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-7">
-                <div class="row">
-                    <div class="col-md-12"style="background-color:#2A4A92; text-align: center; margin-bottom: 25px;">
-                        <span style="color:white; font-size: 37px;">${person.name}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Apellidos :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.lastName}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Nombre :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.name}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Edad :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.age} años</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Dirección :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.address}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Tipo de usuario :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.type}</p>
+            <div class="col col-md-8">
+                <div class="row" >
+                    <div class="col col-md-12">
+                        <div class="media">
+                            <div class="media-body">
+                              <div class="form-group">
+                                <label for="txtArea">Crear publicación :</label>
+                                <textarea class="form-control" id="txtArea" rows="3"></textarea>
+                                <a id="botonPublicar" class="btn btn-info btn-lg btn-block" style="margin-top:10px;">Publicar</a>
+                              </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-            </div> 
-            <div class="col-md-5 grid-margin stretch-card">
-              <div class="card">
-                  <img src="public/img/milco.png" class="rounded" alt="Juegos panamericanos">
-              </div>
-            </div>   
+                <div class="row"id="divPublications">
+                </div>
+            </div>
+            <div class="col col-md-4">
+                <div class="row">
+                    <c:forEach items="${competitors}" var="competitor">
+                        <div class="col col-md-12">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <h5 class="card-title">${personsH.get(competitor.getPersonId())}</h5>
+                              <i class="mdi mdi-thumb-up-outline">Me gusta</i>
+                              <i class="mdi mdi-thumb-down-outline">No me gusta</i>
+                            </div>
+                          </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
           </div>
         </div>
         <!-- content-wrapper ends -->
@@ -294,7 +284,76 @@
           const ut = new SpeechSynthesisUtterance('Hola Mundo, vamos a jalara jajajaja equisde');
             speechSynthesis.speak(ut);
       });
-    */      
+    */     
+   var idDivComentario;
+    var crearPublicacion = function(texto,parentId){
+        if(texto!=null){
+            var url = 'PublicationsController?parametro=getPublications&competitionId=${competition.competitionId}';
+        }else{
+            if(parentId==0){
+                var url = 'PublicationsController?parametro=getPublicationsAlone&competitionId=${competition.competitionId}'
+            }else{
+                var url = 'PublicationsController?parametro=getPublicationsChildrenAlone&competitionId=${competition.competitionId}'
+            }
+        }
+        
+        
+        $.ajax({
+            url : url,
+            scriptCharset: "utf-8" ,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            // la información a enviar
+            // (también es posible utilizar una cadena de datos)
+            data : { personId : ${person.personId},
+                       competitionId: ${competition.competitionId},
+                    txtPublication : texto,
+                    parentId: parentId
+                    },
+
+            // especifica si será una petición POST o GET
+            type : 'GET',
+
+            // el tipo de información que se espera de respuesta
+            dataType : 'html',
+
+            // código a ejecutar si la petición es satisfactoria;
+            // la respuesta es pasada como argumento a la función
+            success : function(json) {
+                //alert(json);
+                if(parentId==0){
+                   $("#divPublications").html(json);
+                    $(".txtAreaComentario").keypress(function() {
+                        var key = window.event.keyCode;
+                        if (key === 13) {
+                            if($(this).val()!=""){
+                                idDivComentario = "divVC"+$(this).data("publicationid");
+                                crearPublicacion($(this).val(),$(this).data("publicationid"));
+                                $(this).val("");
+                            }
+                        }
+                      });
+                    $(".visualizarComentarios").on("click",function(){
+                        idDivComentario = "divVC"+$(this).data("publicationid");
+                        crearPublicacion(null,$(this).data("publicationid"));
+                        
+                    })
+                }else{
+                    $("#"+idDivComentario).html(json);
+                }
+                
+                
+            },
+
+            // código a ejecutar sin importar si la petición falló o no
+            complete : function(xhr, status) {
+                //alert('Petición realizada');
+            }
+        });
+    }
+    $("#botonPublicar").on("click",function(){
+        crearPublicacion($("#txtArea").val(),0);
+    })
+    crearPublicacion(null,0);
   </script>
 </body>
 

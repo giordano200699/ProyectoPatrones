@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -206,49 +207,28 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-7">
-                <div class="row">
-                    <div class="col-md-12"style="background-color:#2A4A92; text-align: center; margin-bottom: 25px;">
-                        <span style="color:white; font-size: 37px;">${person.name}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Apellidos :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.lastName}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Nombre :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.name}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Edad :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.age} años</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Dirección :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.address}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <span>Tipo de usuario :</span>
-                    </div>
-                    <div class="col-md-6">
-                        <p>${person.type}</p>
-                    </div>
-                </div>
-                
+            <div class="col col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Título</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Sede</th>
+                        <th scope="col">Editar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${competitions}" var="competition">
+                            <tr>
+                              <td>${competition.title}</td>
+                              <td>${competition.category}</td>
+                              <td>${headquartersH.get(competition.headquarterId)}</td>
+                              <td><a class="btn btn-success" href="PublicationsController?parametro=showCompetition&id=${competition.competitionId}">Visualizar</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div> 
-            <div class="col-md-5 grid-margin stretch-card">
-              <div class="card">
-                  <img src="public/img/milco.png" class="rounded" alt="Juegos panamericanos">
-              </div>
-            </div>   
           </div>
         </div>
         <!-- content-wrapper ends -->

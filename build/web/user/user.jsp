@@ -167,7 +167,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="user/user.jsp">
+                <a class="nav-link" href="UserProfileController?parametro=index">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Inicio</span>
                 </a>
@@ -177,6 +177,13 @@
                 <a class="nav-link" href="UserProfileController?parametro=userProfile">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Mi Perfil</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="PublicationsController?parametro=competitions">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Competencias</span>
                 </a>
             </li>
           
