@@ -3,10 +3,17 @@
 <div class="col col-md-12">
     <div class="media">
         <div class="media-body">
-          <h5 class="mt-0">${personsH.get(publication.getPersonId())}</h5>
-          <div>${publication.getContent()}</div>
-          <i class="mdi mdi-thumb-up-outline">Me gusta</i>
-          <i class="mdi mdi-thumb-down-outline">No me gusta</i>
+          <h5 class="mt-0" id="person${publication.getPublicationId()}">${personsH.get(publication.getPersonId())}</h5>
+          <div id="content${publication.getPublicationId()}">${publication.getContent()}</div>
+            <button type="button" class="btn btn-link likeComentarios ${pReactionsH.get(publication.getPublicationId())!=null?pReactionsH.get(publication.getPublicationId())==1?'disabled':'':''}" id="like${publication.getPublicationId()}" data-publicationid="${publication.getPublicationId()}">
+                <i class="mdi mdi-thumb-up-outline">Me gusta</i>
+            </button> 
+            <button type="button" class="btn btn-link dislikeComentarios ${pReactionsH.get(publication.getPublicationId())!=null?pReactionsH.get(publication.getPublicationId())==0?'disabled':'':''}" id="dislike${publication.getPublicationId()}" data-publicationid="${publication.getPublicationId()}">
+                <i class="mdi mdi-thumb-down-outline">No me gusta</i>
+            </button>  
+            <button type="button" class="btn btn-link soundComentarios" id="sound${publication.getPublicationId()}" data-publicationid="${publication.getPublicationId()}">
+                 <i class="mdi mdi-voice">Escuchar</i>
+            </button>  
           <!--<div class="media mt-3">
             <a class="mr-3" href="#">
             </a>

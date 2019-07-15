@@ -302,7 +302,7 @@ public class ConexionMongo {
     
     public ArrayList<Publication> getPublications(int competitionId){
         DBCollection publicationsC = this.bd.getCollection("publicaciones");
-        DBCursor publications = publicationsC.find(new BasicDBObject("competenciaId",competitionId).append("padreId",0));
+        DBCursor publications = publicationsC.find(new BasicDBObject("competenciaId",competitionId).append("padreId",0)).sort(new BasicDBObject("publicacionId",-1));
         ArrayList<Publication> publicationsA = new ArrayList<>();
         publications.forEach((publication)->{
             publicationsA.add(new Publication((int)publication.get("publicacionId"),(String)publication.get("contenido"),(int)publication.get("personaId"),(int)publication.get("competenciaId"),(int)publication.get("padreId")));
@@ -338,5 +338,85 @@ public class ConexionMongo {
             competitorsA.add(new Competitor((int)competitor.get("participanteId"),(int)competitor.get("personaId"),(int)competitor.get("competenciaId")));
         });
         return competitorsA;
+    }
+    
+    public void editLikeOrDislikePublication(int personId, int publicationId, int value){
+        DBCollection pReactionsC = this.bd.getCollection("p_reacciones");
+        DBCursor pReactionCU = pReactionsC.find(new BasicDBObject("publicacionId",publicationId).append("personaId", personId)).limit(1);
+        int idPReactionU = 0;
+        if(pReactionCU.hasNext()){
+            BasicDBObject pReactionU = (BasicDBObject) pReactionCU.next();
+            if(pReactionU.get("publicacionId")!=null){
+                idPReactionU = (int)pReactionU.get("publicacionId");
+            }
+        }
+        if(idPReactionU==0){
+            //no existe la reaccion
+            pReactionCU = pReactionsC.find().sort(new BasicDBObject("reaccionId",-1)).limit(1);
+            idPReactionU = 1;
+            if(pReactionCU.hasNext()){
+                BasicDBObject pReactionU = (BasicDBObject) pReactionCU.next();
+                if(pReactionU.get("reaccionId")!=null){
+                    idPReactionU = (int)pReactionU.get("reaccionId") +1;
+                }
+
+            }
+            BasicDBObject documento1 = new BasicDBObject("reaccionId",idPReactionU).append("personaId",personId).append("publicacionId",publicationId).append("valor",value);
+            pReactionsC.insert(documento1);
+        }else{
+            //si existe la reaccion
+            pReactionsC.update(new BasicDBObject("reaccionId",idPReactionU),
+                    new BasicDBObject("$set",new BasicDBObject("valor",value)));
+        }        
+    }
+    
+    public Hashtable<Integer, Integer> getReactionsPublicationOfMe(int personId){
+        DBCollection pReactionsC = this.bd.getCollection("p_reacciones");
+        DBCursor pReactions = pReactionsC.find(new BasicDBObject("personaId",personId));
+        Hashtable<Integer, Integer> pReactionsH = new Hashtable<Integer, Integer>();
+        pReactions.forEach((pReaction)->{
+            pReactionsH.put((int)pReaction.get("publicacionId"), (int)pReaction.get("valor"));
+        });
+        return pReactionsH;
+    }
+    
+    public void editLikeOrDislikeCompetitor(int personId, int competitorId, int value){
+        DBCollection cReactionsC = this.bd.getCollection("c_reacciones");
+        DBCursor cReactionCU = cReactionsC.find(new BasicDBObject("participanteId",competitorId).append("personaId", personId)).limit(1);
+        int idCReactionU = 0;
+        if(cReactionCU.hasNext()){
+            BasicDBObject cReactionU = (BasicDBObject) cReactionCU.next();
+            if(cReactionU.get("participanteId")!=null){
+                idCReactionU = (int)cReactionU.get("participanteId");
+            }
+        }
+        if(idCReactionU==0){
+            //no existe la reaccion
+            cReactionCU = cReactionsC.find().sort(new BasicDBObject("reaccionId",-1)).limit(1);
+            idCReactionU = 1;
+            if(cReactionCU.hasNext()){
+                BasicDBObject cReactionU = (BasicDBObject) cReactionCU.next();
+                if(cReactionU.get("reaccionId")!=null){
+                    idCReactionU = (int)cReactionU.get("reaccionId") +1;
+                }
+
+            }
+            BasicDBObject documento1 = new BasicDBObject("reaccionId",idCReactionU).append("personaId",personId).append("participanteId",competitorId).append("valor",value);
+            cReactionsC.insert(documento1);
+        }else{
+            //si existe la reaccion
+            cReactionsC.update(new BasicDBObject("reaccionId",idCReactionU),
+                    new BasicDBObject("$set",new BasicDBObject("valor",value)));
+        }        
+    }
+    
+    public Hashtable<Integer, Integer> getReactionsCompetitorOfMe(int personId){
+        DBCollection cReactionsC = this.bd.getCollection("c_reacciones");
+        DBCursor cReactions = cReactionsC.find(new BasicDBObject("personaId",personId));
+        Hashtable<Integer, Integer> cReactionsH = new Hashtable<Integer, Integer>();
+        cReactions.forEach((cReaction)->{
+            cReactionsH.put((int)cReaction.get("participanteId"), (int)cReaction.get("valor"));
+        });
+        return cReactionsH;
     }
 }

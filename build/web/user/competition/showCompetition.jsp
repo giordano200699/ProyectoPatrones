@@ -231,8 +231,20 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                               <h5 class="card-title">${personsH.get(competitor.getPersonId())}</h5>
-                              <i class="mdi mdi-thumb-up-outline">Me gusta</i>
-                              <i class="mdi mdi-thumb-down-outline">No me gusta</i>
+                              <div class="row">
+                                  <div class="col col-md-6" style="text-align:center;">
+                                      <button type="button" class="btn btn-sm btn-link likeCompetidor ${cReactionsH.get(competitor.getCompetitorId())!=null?cReactionsH.get(competitor.getCompetitorId())==1?'disabled':'':''}" id="likeComp${competitor.getCompetitorId()}" data-competitorid="${competitor.getCompetitorId()}">
+                                            <i class="mdi mdi-thumb-up-outline" style="font-size: 18px;">Like</i>
+                                        </button> 
+                                  </div>
+                                  <div class="col col-md-6" style="text-align:center;">
+                                      <button type="button" class="btn btn-sm btn-link dislikeCompetidor ${cReactionsH.get(competitor.getCompetitorId())!=null?cReactionsH.get(competitor.getCompetitorId())==0?'disabled':'':''}" id="dislikeComp${competitor.getCompetitorId()}" data-competitorid="${competitor.getCompetitorId()}">
+                                            <i class="mdi mdi-thumb-down-outline" style="font-size: 18px;">Dislike</i>
+                                        </button> 
+                                  </div>          
+                              
+                                
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -285,6 +297,68 @@
             speechSynthesis.speak(ut);
       });
     */     
+   var likeOrDislike = function(value,publicationId){
+       $.ajax({
+            url : 'PublicationsController?parametro=setLikeOrDislike',
+            scriptCharset: "utf-8" ,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            // la información a enviar
+            // (también es posible utilizar una cadena de datos)
+            data : { personId : ${person.personId},
+                    publicationId: publicationId,
+                    value: value
+                    },
+
+            // especifica si será una petición POST o GET
+            type : 'GET',
+
+            // el tipo de información que se espera de respuesta
+            dataType : 'html',
+
+            // código a ejecutar si la petición es satisfactoria;
+            // la respuesta es pasada como argumento a la función
+            success : function(html) {
+                
+            },
+
+            // código a ejecutar sin importar si la petición falló o no
+            complete : function(xhr, status) {
+                //alert('Petición realizada');
+            }
+        });
+   }
+   
+   var likeOrDislikeComp = function(value,competitorId){
+       $.ajax({
+            url : 'PublicationsController?parametro=setLikeOrDislikeComp',
+            scriptCharset: "utf-8" ,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            // la información a enviar
+            // (también es posible utilizar una cadena de datos)
+            data : { personId : ${person.personId},
+                    competitorId: competitorId,
+                    value: value
+                    },
+
+            // especifica si será una petición POST o GET
+            type : 'GET',
+
+            // el tipo de información que se espera de respuesta
+            dataType : 'html',
+
+            // código a ejecutar si la petición es satisfactoria;
+            // la respuesta es pasada como argumento a la función
+            success : function(html) {
+                
+            },
+
+            // código a ejecutar sin importar si la petición falló o no
+            complete : function(xhr, status) {
+                //alert('Petición realizada');
+            }
+        });
+   }
+   
    var idDivComentario;
     var crearPublicacion = function(texto,parentId){
         if(texto!=null){
@@ -337,8 +411,40 @@
                         crearPublicacion(null,$(this).data("publicationid"));
                         
                     })
+                    $(".dislikeComentarios").on("click",function(){
+                        likeOrDislike(0,$(this).data("publicationid"))
+                        $(this).addClass("disabled");
+                        $("#like"+$(this).data("publicationid")).removeClass("disabled");
+                    })
+                    $(".likeComentarios").on("click",function(){
+                        likeOrDislike(1,$(this).data("publicationid"))
+                        $(this).addClass("disabled");
+                        $("#dislike"+$(this).data("publicationid")).removeClass("disabled");
+                    })
+                    $(".soundComentarios").unbind("click");
+                    $(".soundComentarios").on("click",function(){
+                        const ut = new SpeechSynthesisUtterance($("#person"+$(this).data("publicationid")).html()+" comentó, "+$("#content"+$(this).data("publicationid")).html());
+                        speechSynthesis.speak(ut);
+                    })
                 }else{
                     $("#"+idDivComentario).html(json);
+                    $( ".likeComentarios2" ).unbind("click");
+                    $( ".likeComentarios2" ).on("click",function(){
+                        likeOrDislike(1,$(this).data("publicationid"))
+                        $(this).addClass("disabled");
+                        $("#dislikeC"+$(this).data("publicationid")).removeClass("disabled");
+                    });
+                    $( ".dislikeComentarios2" ).unbind("click");
+                    $( ".dislikeComentarios2" ).on("click",function(){
+                        likeOrDislike(0,$(this).data("publicationid"))
+                        $(this).addClass("disabled");
+                        $("#likeC"+$(this).data("publicationid")).removeClass("disabled");
+                    });
+                    $(".soundComentarios").unbind("click");
+                    $(".soundComentarios").on("click",function(){
+                        const ut = new SpeechSynthesisUtterance($("#person"+$(this).data("publicationid")).html()+" comentó, "+$("#content"+$(this).data("publicationid")).html());
+                        speechSynthesis.speak(ut);
+                    })
                 }
                 
                 
@@ -354,6 +460,16 @@
         crearPublicacion($("#txtArea").val(),0);
     })
     crearPublicacion(null,0);
+    $( ".likeCompetidor" ).on("click",function(){
+        likeOrDislikeComp(1,$(this).data("competitorid"))
+        $(this).addClass("disabled");
+        $("#dislikeComp"+$(this).data("competitorid")).removeClass("disabled");
+    });
+    $( ".dislikeCompetidor" ).on("click",function(){
+        likeOrDislikeComp(0,$(this).data("competitorid"))
+        $(this).addClass("disabled");
+        $("#likeComp"+$(this).data("competitorid")).removeClass("disabled");
+    });
   </script>
 </body>
 
