@@ -419,4 +419,16 @@ public class ConexionMongo {
         });
         return cReactionsH;
     }
+    
+    public void reportPublication(int personId, int publicationId){
+        DBCollection publicationsC = this.bd.getCollection("publicaciones");
+        DBCollection pReactionsC = this.bd.getCollection("p_reacciones");
+        DBCursor publications = publicationsC.find(new BasicDBObject("padreId",publicationId));
+        publications.forEach((publication)->{
+            pReactionsC.remove(new BasicDBObject().append("publicacionId", (int)publication.get("publicacionId")));
+            publicationsC.remove(new BasicDBObject().append("publicacionId", (int)publication.get("publicacionId")));
+        });
+        pReactionsC.remove(new BasicDBObject().append("publicacionId", publicationId));
+        publicationsC.remove(new BasicDBObject().append("publicacionId", publicationId));
+    }
 }

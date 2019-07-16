@@ -143,7 +143,7 @@
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="public/images/faces/face5.jpg" alt="profile"/>
-              <span class="nav-profile-name">Louis Barnett</span>
+              <span class="nav-profile-name">${person.name}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
@@ -214,6 +214,7 @@
                             <th scope="col">Categoría</th>
                             <th scope="col">Sede</th>
                             <th scope="col">Editar</th>
+                            <th scope="col">Visualizar</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -224,6 +225,7 @@
                                   <td>${competition.category}</td>
                                   <td>${headquartersH.get(competition.headquarterId)}</td>
                                   <td><a class="btn btn-success" href="CompetitionsController?page=editCompetition&id=${competition.competitionId}">Editar</a></td>
+                                  <td><a class="btn btn-success" href="AdminPublicationsController?parametro=showCompetition&id=${competition.competitionId}">Visualizar</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

@@ -214,7 +214,7 @@
                         <th scope="col">Título</th>
                         <th scope="col">Categoría</th>
                         <th scope="col">Sede</th>
-                        <th scope="col">Editar</th>
+                        <th scope="col">Visualizar</th>
                       </tr>
                     </thead>
                     <tbody>
