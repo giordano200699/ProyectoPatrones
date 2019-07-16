@@ -51,6 +51,9 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="login.jsp">Iniciar Sesión</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="register.jsp">Registrarse</a>
+          </li>
         </ul>
       </div>
     </div>

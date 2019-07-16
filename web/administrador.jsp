@@ -190,6 +190,13 @@
                     <span class="menu-title">Competencias</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="StatisticController?parametro=CompetitionStatistic">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Estadistica</span>
+                </a>
+            </li>
           
         </ul>
       </nav>

@@ -5,6 +5,7 @@
  */
 package BD;
 
+import clases.ClassIteratorHash;
 import clases.Competition;
 import clases.Competitor;
 import com.mongodb.BasicDBObject;
@@ -18,8 +19,12 @@ import java.util.ArrayList;
 import clases.Sede;
 import clases.Person;
 import clases.Publication;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -430,5 +435,50 @@ public class ConexionMongo {
         });
         pReactionsC.remove(new BasicDBObject().append("publicacionId", publicationId));
         publicationsC.remove(new BasicDBObject().append("publicacionId", publicationId));
+    }
+    
+    public ArrayList<ClassIteratorHash> topCompetition(){
+        DBCollection publicationsC = this.bd.getCollection("publicaciones");
+                
+        DBCursor publications = publicationsC.find(new BasicDBObject().append("padreId", 0));
+        //ArrayList<Competitor> competitorsA = new ArrayList<>();
+        Hashtable<Integer, Integer> topCompetitionH = new Hashtable<Integer, Integer>();
+        publications.forEach((publication)->{
+            
+            int valor = topCompetitionH.getOrDefault((int)publication.get("competenciaId"), 0);
+            if(valor==0){
+                valor = 1;
+            }else{
+                valor++;
+            }
+            topCompetitionH.put((int)publication.get("competenciaId"),valor);
+        });
+        
+        Set set = topCompetitionH.entrySet();
+        Iterator i = set.iterator();
+        ArrayList<ClassIteratorHash> lista = new ArrayList<>();
+        while(i.hasNext()) {
+            
+          Map.Entry me = (Map.Entry)i.next();          
+          lista.add(new ClassIteratorHash((int)me.getKey(),(int)me.getValue()));
+       }
+        
+        Collections.sort(lista);
+        if(lista.size()>10){
+            return new ArrayList<ClassIteratorHash>(lista.subList(lista.size() -10, lista.size()));
+        }
+        
+        
+        return lista;
+    }
+    
+    public Hashtable<Integer, String> getCompetitionDiccionary(){
+        DBCollection competitionsC = this.bd.getCollection("competencias");
+        DBCursor competitions = competitionsC.find();
+        Hashtable<Integer, String> competitionsH = new Hashtable<Integer, String>();
+        competitions.forEach((competition)->{
+            competitionsH.put((int)competition.get("competenciaId"), (String)competition.get("titulo"));
+        });
+        return competitionsH;
     }
 }

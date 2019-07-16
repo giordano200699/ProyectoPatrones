@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="public/css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="public/images/favicon.png" />
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -206,34 +207,10 @@
           
             <div class="row">
                 <div class="col col-md-10">
-                    <h3>Lista de Sedes</h3>
-                </div>
-                <div class="col col-md-2">
-                    <a class="btn btn-success" href="SedesControlador?pagina=crearSede">Crear Sede</a>
+                    <h3>Visualización de Estadistica</h3>
                 </div>
                 <div class="col col-md-12">
-                    <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Dirección</th>
-                            <th scope="col">Aforo</th>
-                            <th scope="col">Editar</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${sedes}" var="sede">
-                                <tr>
-                                  <th scope="row">${sede.sedeId}</th>
-                                  <td>${sede.nombre}</td>
-                                  <td>${sede.direccion}</td>
-                                  <td>${sede.aforo}</td>
-                                  <td><a class="btn btn-success" href="SedesControlador?pagina=editarSede&id=${sede.sedeId}">Editar</a></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                    <div id="columnchart_values"></div>
                 </div>
             </div>
             
@@ -272,6 +249,37 @@
   <script src="public/js/data-table.js"></script>
   <script src="public/js/jquery.dataTables.js"></script>
   <script src="public/js/dataTables.bootstrap4.js"></script>
+  <script>
+                  
+                    
+        google.charts.load("current", {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ["Element", "Nº Publicaciones", { role: "style" } ],
+            <c:forEach items="${lista}" var="objeto">
+                ['${competitionH.get(objeto.getClave())}',${objeto.getValor()*1.0},"color: #3366CC"],
+            </c:forEach>
+          ]);
+
+          var view = new google.visualization.DataView(data);
+          view.setColumns([0, 1,
+                           { calc: "stringify",
+                             sourceColumn: 1,
+                             type: "string",
+                             role: "annotation" },
+                           2]);
+
+          var options = {
+            title: "Top 10 de Competencias según el número de publicaciones",
+            height: 400,
+            bar: {groupWidth: "95%"},
+            legend: { position: "none" },
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+          chart.draw(view, options);
+      }
+  </script>
   <!-- End custom js for this page-->
 </body>
 

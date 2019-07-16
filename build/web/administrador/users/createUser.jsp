@@ -150,8 +150,8 @@
                 <i class="mdi mdi-settings text-primary"></i>
                 Configuración
               </a>
-              <a class="dropdown-item">
-                <i class="mdi mdi-logout text-primary" href="index.jsp"></i>
+              <a class="dropdown-item" href="LoginController?parametro=logout">
+                <i class="mdi mdi-logout text-primary"></i>
                 Cerrar Sesión
               </a>
             </div>
@@ -189,6 +189,12 @@
                 <a class="nav-link" href="CompetitionsController?page=showCompetitions">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Competencias</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="StatisticController?parametro=CompetitionStatistic">
+                    <i class="mdi mdi-home menu-icon"></i>
+                    <span class="menu-title">Estadistica</span>
                 </a>
             </li>
           
